@@ -1,0 +1,94 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Giriş - Döktaş Zimmet App</title>
+
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
+    <script src="~/Content/js/fontawesome-6.js"></script>
+
+    <style>
+        .bg-primary {
+            background-color: #df7b00 !important;
+        }
+    </style>
+
+</head>
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header text-center bg-white">
+                                    <img src="~/Content/img/doktas-logo.jpg" class="img-fluid" style="width: 50% !important;" />
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" action="/Sign/In">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control"
+                                                   id="inputUserCode"
+                                                   type="number"
+                                                   placeholder="Kullanıcı Kodu"
+                                                   name="UserCode" />
+                                            <label for="inputUserCode">Kullanıcı Kodu</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control"
+                                                   id="inputPassword"
+                                                   type="password"
+                                                   placeholder="Şifre"
+                                                   name="UserPassword" />
+                                            <label for="inputPassword">Şifre</label>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                            <button class="btn btn-primary" type="submit">
+                                                Giriş
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-center small">
+                        <div class="">&copy; Döktaş 2023 - @DateTime.Now.Year</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/Content/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/js/scripts.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: '@TempData["Error"]'
+            })
+        </script>
+    }
+</body>
+</html>
+
