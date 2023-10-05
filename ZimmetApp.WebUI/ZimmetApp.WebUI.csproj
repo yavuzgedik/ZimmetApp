@@ -109,6 +109,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusteriController.cs" />
     <Compile Include="Controllers\SignController.cs" />
+    <Compile Include="Controllers\ZimmetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -123,6 +124,8 @@
     <Content Include="Views\Sign\In.cshtml" />
     <Content Include="Views\Musteri\Listele.cshtml" />
     <Content Include="Views\Musteri\Ekle.cshtml" />
+    <Content Include="Views\Zimmet\Listele.cshtml" />
+    <Content Include="Views\Zimmet\Ekle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,74 @@
+﻿@model ZimmetApp.Entities.Models.ZimmetTanim
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card mb-4 mt-4">
+            <div class="card-header">
+                <i class="fa-solid fa-circle-plus"></i> Zimmet Ekle
+            </div>
+            <div class="card-body">
+                <form method="post" action="/Zimmet/Ekle">
+
+                    @if (Model != null)
+                    {
+                        <input type="hidden" class="form-control" name="Id" value="@Model.Id">
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label">Açıklama</label>
+                        <input type="text" class="form-control" name="Aciklama" value="@(Model != null ? Model.Aciklama : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Url</label>
+                        <input type="text" class="form-control" name="Url" value="@(Model != null ? Model.Url : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Kayıt Kullanıcı Adı</label>
+                        <input type="text" class="form-control" name="KayitKullaniciAdi" value="@(Model != null ? Model.KayitKullaniciAdi : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Kayıt Telefon No</label>
+                        <input type="text" class="form-control" name="KayitTelefonNo" value="@(Model != null ? Model.KayitTelefonNo : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Irtibat1</label>
+                        <input type="text" class="form-control" name="Irtibat1" value="@(Model != null ? Model.Irtibat1 : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Irtibat2</label>
+                        <input type="text" class="form-control" name="Irtibat2" value="@(Model != null ? Model.Irtibat2 : "")">
+                    </div>
+
+
+                    @if (Model != null)
+                    {
+                        <button class="btn btn-success" type="submit">
+                            Güncelle
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" type="submit">
+                            Kaydet
+                        </button>
+                    }
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
