@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card mb-4 mt-4">
+    <div class="card-header">
+        <i class="fa-solid fa-circle-plus"></i> Müşteri Ekle
+    </div>
+    <div class="card-body">
+        <form method="post" action="/Musteri/Ekle">
+
+            <div class="mb-3">
+                <label class="form-label">Müşteri Kod</label>
+                <input type="text" class="form-control" name="MusteriKod" maxlength="10">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Müşteri Adı</label>
+                <input type="text" class="form-control" name="MusteriAdi">
+            </div>
+
+
+            <button class="btn btn-primary" type="submit">
+                Kaydet
+            </button>
+
+        </form>
+    </div>
+</div>
+

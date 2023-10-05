@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\Musteri.cs" />
+    <Compile Include="Models\ZimmetTanim.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
