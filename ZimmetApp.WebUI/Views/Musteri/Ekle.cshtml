@@ -1,32 +1,53 @@
-﻿
+﻿@model ZimmetApp.Entities.Models.Musteri
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="card mb-4 mt-4">
-    <div class="card-header">
-        <i class="fa-solid fa-circle-plus"></i> Müşteri Ekle
-    </div>
-    <div class="card-body">
-        <form method="post" action="/Musteri/Ekle">
-
-            <div class="mb-3">
-                <label class="form-label">Müşteri Kod</label>
-                <input type="text" class="form-control" name="MusteriKod" maxlength="10">
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card mb-4 mt-4">
+            <div class="card-header">
+                <i class="fa-solid fa-circle-plus"></i> Müşteri Ekle
             </div>
+            <div class="card-body">
+                <form method="post" action="/Musteri/Ekle">
 
-            <div class="mb-3">
-                <label class="form-label">Müşteri Adı</label>
-                <input type="text" class="form-control" name="MusteriAdi">
+                    @if (Model != null)
+                    {
+                        <input type="hidden" class="form-control" name="Id" value="@Model.Id">
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label">Müşteri Kod</label>
+                        <input type="text" class="form-control" name="MusteriKod" maxlength="10" value="@(Model != null ? Model.MusteriKod : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Müşteri Adı</label>
+                        <input type="text" class="form-control" name="MusteriAdi" value="@(Model != null ? Model.MusteriAdi : "")">
+                    </div>
+
+
+                    @if (Model != null)
+                    {
+                        <button class="btn btn-success" type="submit">
+                            Güncelle
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" type="submit">
+                            Kaydet
+                        </button>
+                    }
+
+
+                </form>
             </div>
-
-
-            <button class="btn btn-primary" type="submit">
-                Kaydet
-            </button>
-
-        </form>
+        </div>
     </div>
 </div>
+
+
 

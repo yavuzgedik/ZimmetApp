@@ -28,7 +28,7 @@
                             foreach (var item in Model)
                             {
                                 <tr class="@(item.IsDeleted ? "table-danger" : "")">
-                                    <td class="align-middle">
+                                    <td class="align-middle text-center">
                                         @item.MusteriKod
                                     </td>
                                     <td class="align-middle">
@@ -40,10 +40,11 @@
                                     <td class="align-middle text-center">
                                         <div class="btn-group btn-group-sm"
                                              role="group" aria-label="İşlemler">
-                                            <button type="button"
+
+                                            <a href="/Musteri/Ekle/?musteri_id=@item.Id"
                                                     class="btn btn-success btn-sm">
                                                 <i class="fa-solid fa-pen-to-square"></i>
-                                            </button>
+                                            </a>
 
                                             @*<button type="button"
                                                         onclick="location.href = '/Musteri/Sil/?id=@item.Id'"
