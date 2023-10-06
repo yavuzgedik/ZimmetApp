@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\LogTip.cs" />
+    <Compile Include="Helper\LogDetay.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Musteri.cs" />
+    <Compile Include="Models\ZimmetLog.cs" />
     <Compile Include="Models\ZimmetTanim.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

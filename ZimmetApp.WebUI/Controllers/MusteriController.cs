@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ZimmetApp.DataAccess.EntityFramework;
 using ZimmetApp.Entities.Models;
+using ZimmetApp.WebUI.Models.ViewModels;
 
 namespace ZimmetApp.WebUI.Controllers
 {
@@ -14,12 +16,25 @@ namespace ZimmetApp.WebUI.Controllers
         {
             using (var db = new ZimmetDbContext())
             {
+                //Stopwatch stopwatch = new Stopwatch();
+                //stopwatch.Start();
+
                 var musteriler = db.Musteris
                     .Include("ZimmetTanims")
                     //.Where(x => x.IsDeleted == false)
                     .Where(x => !x.IsDeleted)
                     .OrderBy(x => x.MusteriKod)
-                    .ToList();
+                    .Select(x => new MusteriVM()
+                    {
+                        MusteriAdi = x.MusteriAdi,
+                        MusteriKodu = x.MusteriKod,
+                        ZimmetSayisi = x.ZimmetTanims.Count(),
+                        IsDeleted = x.IsDeleted,
+                        Id = x.Id
+                    }).ToList();
+
+                //stopwatch.Stop();
+                //var sure = stopwatch.Elapsed;
 
                 return View(musteriler);
             }

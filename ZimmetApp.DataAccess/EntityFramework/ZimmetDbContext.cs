@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
+using ZimmetApp.Entities.Helper;
 using ZimmetApp.Entities.Models;
 
 namespace ZimmetApp.DataAccess.EntityFramework
@@ -16,6 +17,7 @@ namespace ZimmetApp.DataAccess.EntityFramework
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Musteri> Musteris { get; set; }
         public virtual DbSet<ZimmetTanim> ZimmetTanims { get; set; }
+        public virtual DbSet<ZimmetLog> ZimmetLogs { get; set; }
     }
 
     public class ZimmetInitializer : CreateDatabaseIfNotExists<ZimmetDbContext>

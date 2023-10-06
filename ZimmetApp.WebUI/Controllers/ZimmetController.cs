@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ZimmetApp.DataAccess.EntityFramework;
+using ZimmetApp.Entities.Helper;
 using ZimmetApp.Entities.Models;
+using ZimmetApp.WebUI.Operations;
 
 namespace ZimmetApp.WebUI.Controllers
 {
@@ -14,6 +16,9 @@ namespace ZimmetApp.WebUI.Controllers
         {
             using (var db = new ZimmetDbContext())
             {
+                var user = Session["User"] as User;
+                LogOP.LogOlusturma(user, LogDetay.ZimmetListeleme, Entities.Enums.LogTip.Read);
+
                 if (musteri_id != null)
                 {
                     var zimmetler = db.ZimmetTanims
@@ -42,6 +47,8 @@ namespace ZimmetApp.WebUI.Controllers
 
         public ActionResult Ekle(Guid? zimmet_id)
         {
+            var user = Session["User"] as User;
+
             using (var db = new ZimmetDbContext())
             {
                 var musteriler = db.Musteris
@@ -57,6 +64,8 @@ namespace ZimmetApp.WebUI.Controllers
                 }
                 else
                 {
+                    LogOP.LogOlusturma(user, LogDetay.ZimmetDetay, Entities.Enums.LogTip.Read);
+
                     var zimmet = db.ZimmetTanims.FirstOrDefault(x => x.Id == zimmet_id);
                     return View(zimmet);
                 }
@@ -66,12 +75,16 @@ namespace ZimmetApp.WebUI.Controllers
         [HttpPost]
         public ActionResult Ekle(ZimmetTanim zimmetTanim)
         {
+            var user = Session["User"] as User;
+
             using (var db = new ZimmetDbContext())
             {
                 var dbzimmmetTanim = db.ZimmetTanims.FirstOrDefault(x => x.Id == zimmetTanim.Id);
 
                 if (dbzimmmetTanim == null) // İLK KAYIT
                 {
+                    LogOP.LogOlusturma(user, LogDetay.ZimmetEkle, Entities.Enums.LogTip.Create);
+
                     db.ZimmetTanims.Add(zimmetTanim);
                     db.SaveChanges();
 
@@ -80,6 +93,8 @@ namespace ZimmetApp.WebUI.Controllers
                 }
                 else // GÜNCELLEME
                 {
+                    LogOP.LogOlusturma(user, LogDetay.ZimmetGuncelleme, Entities.Enums.LogTip.Update);
+
                     dbzimmmetTanim.Aciklama = zimmetTanim.Aciklama;
                     dbzimmmetTanim.Url = zimmetTanim.Url;
                     dbzimmmetTanim.KayitKullaniciAdi = zimmetTanim.KayitKullaniciAdi;
@@ -101,6 +116,9 @@ namespace ZimmetApp.WebUI.Controllers
         {
             using (var db = new ZimmetDbContext())
             {
+                var user = Session["User"] as User;
+                LogOP.LogOlusturma(user, LogDetay.ZimmetSil, Entities.Enums.LogTip.Delete);
+
                 var zimmet = db.ZimmetTanims
                     .FirstOrDefault(x => x.Id == id);
 

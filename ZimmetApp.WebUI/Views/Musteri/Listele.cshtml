@@ -1,7 +1,8 @@
-﻿@model List<ZimmetApp.Entities.Models.Musteri>
+﻿@model List<ZimmetApp.WebUI.Models.ViewModels.MusteriVM>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <div class="row justify-content-center">
@@ -29,13 +30,13 @@
                             {
                                 <tr class="@(item.IsDeleted ? "table-danger" : "")">
                                     <td class="align-middle text-center">
-                                        @item.MusteriKod
+                                        @item.MusteriKodu
                                     </td>
                                     <td class="align-middle">
                                         @item.MusteriAdi
                                     </td>
                                     <td class="align-middle text-center">
-                                        @item.ZimmetTanims.Count()
+                                        @item.ZimmetSayisi
                                     </td>
                                     <td class="align-middle text-center">
                                         <div class="btn-group btn-group-sm"

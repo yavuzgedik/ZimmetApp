@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ZimmetApp.DataAccess.EntityFramework;
+using ZimmetApp.Entities.Helper;
+using ZimmetApp.Entities.Models;
+using ZimmetApp.WebUI.Operations;
 
 namespace ZimmetApp.WebUI.Controllers
 {
@@ -43,6 +46,8 @@ namespace ZimmetApp.WebUI.Controllers
 
                 if (user != null)
                 {
+                    LogOP.LogOlusturma(user, LogDetay.SignIn, Entities.Enums.LogTip.SignIn);
+
                     Session["User"] = user;
                     return RedirectToAction("Index", "Home");
                 }
@@ -56,6 +61,8 @@ namespace ZimmetApp.WebUI.Controllers
 
         public ActionResult Out()
         {
+            var user = Session["User"] as User;
+            LogOP.LogOlusturma(user, LogDetay.SignIn, Entities.Enums.LogTip.SignIn);
             Session.Abandon();
             return RedirectToAction("In", "Sign");
         }

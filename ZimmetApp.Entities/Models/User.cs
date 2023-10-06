@@ -19,6 +19,8 @@ namespace ZimmetApp.Entities.Models
 
         public bool IsAdmin { get; set; }
 
+        public virtual List<ZimmetLog> ZimmetLogs { get; set; }
+
         [NotMapped]
         public string FullName 
         { 
