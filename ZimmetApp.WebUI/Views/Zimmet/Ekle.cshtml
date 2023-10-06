@@ -72,12 +72,18 @@
 
                     <div class="mb-3">
                         <label class="form-label">Müşteri</label>
-                        <select class="form-control" name="MusteriId">
-                            <option value="null">Müşteri Seçiniz</option>
+                        <select class="form-control selectpicker" name="MusteriId" 
+                                data-title="Müşteri Seçiniz"
+                                data-live-search="true" data-size="3">
+                            @*<option value="null">Müşteri Seçiniz</option>*@
                             @foreach (var item in musteriler)
                             {
-                                <option @(Model != null && Model.MusteriId == item.Id ? "selected" : "") 
-                                        value="@item.Id">@item.MusteriAdi (@item.MusteriKod)</option>
+                                var satirHtml = "<b>Kod : </b>" + item.MusteriKod + "<br/>"
+                                    + "<b>Ad : </b>" + item.MusteriAdi;
+
+                                <option data-content="@satirHtml"
+                                        @(Model != null && Model.MusteriId == item.Id ? "selected" : "") 
+                                        value="@item.Id"></option>
                             }
                         </select>
                     </div>
