@@ -26,13 +26,20 @@ namespace ZimmetApp.WebUI.Controllers
 
         public ActionResult Ekle(Guid? zimmet_id)
         {
-            if (zimmet_id == null)
+            using (var db = new ZimmetDbContext())
             {
-                return View();
-            }
-            else
-            {
-                using (var db = new ZimmetDbContext())
+                var musteriler = db.Musteris
+                    .Where(x => !x.IsDeleted)
+                    .OrderBy(x => x.MusteriKod)
+                    .ToList();
+
+                ViewBag.Musteriler = musteriler;
+
+                if (zimmet_id == null)
+                {
+                    return View();
+                }
+                else
                 {
                     var zimmet = db.ZimmetTanims.FirstOrDefault(x => x.Id == zimmet_id);
                     return View(zimmet);
@@ -63,7 +70,7 @@ namespace ZimmetApp.WebUI.Controllers
                     dbzimmmetTanim.KayitTelefonNo = zimmetTanim.KayitTelefonNo;
                     dbzimmmetTanim.Irtibat1 = zimmetTanim.Irtibat1;
                     dbzimmmetTanim.Irtibat2 = zimmetTanim.Irtibat2;
-
+                    dbzimmmetTanim.MusteriId = zimmetTanim.MusteriId;
                     dbzimmmetTanim.UpdatedAt = DateTime.Now;
 
                     db.SaveChanges();

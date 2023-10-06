@@ -6,96 +6,135 @@
 
 <div class="row justify-content-center">
 
-    <div class="col-lg-8">
+    <div class="col-lg-12">
 
         <div class="card mb-4 mt-4">
             <div class="card-header">
                 <i class="fa-solid fa-boxes"></i> Zimmet Listesi
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="align-middle text-center">Tarih</th>
-                            <th class="align-middle text-center">Açıklama Kodu</th>
-                            <th class="align-middle text-center">Url</th>
-                            <th class="align-middle text-center">Kayıt Kullanıcı Adi</th>
-                            <th class="align-middle text-center">Kayıt Telefon No</th>
-                            <th class="align-middle text-center">Müşteri</th>
-                            <th class="align-middle text-center">İrtibat</th>
-                            <th class="align-middle text-center">İşlemler</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null && Model.Count > 0)
-                        {
-                            foreach (var item in Model)
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="align-middle text-center">Tarih</th>
+                                <th class="align-middle text-center" width="30%">Açıklama</th>
+                                <th class="align-middle text-center">Url</th>
+                                <th class="align-middle text-center">Kayıt Kullanıcı Adi</th>
+                                <th class="align-middle text-center">Kayıt Telefon No</th>
+                                <th class="align-middle text-center">Müşteri</th>
+                                <th class="align-middle text-center">İrtibat</th>
+                                <th class="align-middle text-center">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="align-middle text-center">
+                                            @item.CreatedAt.ToString("dd.MM.yyyy HH:mm")
+                                        </td>
+                                        <td class="align-middle" width="30%">
+                                            @if (item.Aciklama != null && item.Aciklama.Length > 50)
+                                            {
+                                                <span>
+                                                    @item.Aciklama.Substring(0, 45) ...
+                                                </span>
+
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                        onclick="document.getElementById('aciklamaDetayId').innerText = '@item.Aciklama.Replace("'", "`")'"
+                                                        data-bs-toggle="modal" data-bs-target="#detayModal">
+                                                    Detay
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <span>
+                                                    @item.Aciklama
+                                                </span>
+                                            }
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @item.Url
+                                        </td>
+                                        <td class="align-middle">
+                                            @item.KayitKullaniciAdi
+                                        </td>
+                                        <td class="align-middle">
+                                            @item.KayitTelefonNo
+                                        </td>
+                                        <td class="align-middle">
+                                            @if (item.Musteri != null)
+                                            {
+                                                <span>
+                                                    @item.Musteri.MusteriKod - @item.Musteri.MusteriAdi
+                                                </span>
+                                            }
+                                        </td>
+                                        <td class="align-middle">
+                                            <small>
+                                                @item.Irtibat1<br />
+                                                @item.Irtibat2
+                                            </small>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <div class="btn-group btn-group-sm"
+                                                 role="group" aria-label="İşlemler">
+
+                                                <a href="/Zimmet/Ekle/?zimmet_id=@item.Id"
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+
+
+                                                <button type="button"
+                                                        onclick="Sil('@item.Id')"
+                                                        class="btn btn-danger btn-sm">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td class="align-middle text-center">
-                                        @item.CreatedAt.ToString("dd.MM.yyyy HH:mm")
-                                    </td>
-                                    <td class="align-middle">
-                                        @item.Aciklama
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        @item.Url
-                                    </td>
-                                    <td class="align-middle">
-                                        @item.KayitKullaniciAdi
-                                    </td>
-                                    <td class="align-middle">
-                                        @item.KayitTelefonNo
-                                    </td>
-                                    <td class="align-middle">
-                                        @if (item.Musteri != null)
-                                        {
-                                            <span>
-                                                @item.Musteri.MusteriKod - @item.Musteri.MusteriAdi
-                                            </span>
-                                        }
-                                    </td>
-                                    <td class="align-middle">
-                                        <small>
-                                            @item.Irtibat1<br />
-                                            @item.Irtibat2
-                                        </small>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <div class="btn-group btn-group-sm"
-                                             role="group" aria-label="İşlemler">
-
-                                            <a href="/Zimmet/Ekle/?zimmet_id=@item.Id"
-                                               class="btn btn-success btn-sm">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-
-
-                                            <button type="button"
-                                                    onclick="Sil('@item.Id')"
-                                                    class="btn btn-danger btn-sm">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-
-
-                                        </div>
-                                    </td>
+                                    <td colspan="8" class="text-center">Kayıt Bulunamadı!.</td>
                                 </tr>
                             }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="8" class="text-center">Kayıt Bulunamadı!.</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
+
             </div>
         </div>
 
     </div>
 
+</div>
+
+<div class="modal fade" id="detayModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Açıklama Detayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="aciklamaDetayId"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -118,6 +157,13 @@
                 //Swal.fire('Changes are not saved', '', 'info')
             }
         })
+    }
+
+    function DetayDoldur(detay) {
+
+        console.log(detay);
+
+        document.getElementById("aciklamaDetayId").innerText = detay;
     }
 
 </script>
