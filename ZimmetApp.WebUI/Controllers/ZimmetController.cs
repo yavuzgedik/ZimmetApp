@@ -10,17 +10,33 @@ namespace ZimmetApp.WebUI.Controllers
 {
     public class ZimmetController : BaseController
     {
-        public ActionResult Listele()
+        public ActionResult Listele(Guid? musteri_id)
         {
             using (var db = new ZimmetDbContext())
             {
-                var zimmetler = db.ZimmetTanims
+                if (musteri_id != null)
+                {
+                    var zimmetler = db.ZimmetTanims
+                        .Include("Musteri")
+                        .Where(x => !x.IsDeleted && x.MusteriId == musteri_id)
+                        .OrderBy(x => x.CreatedAt)
+                        .ToList();
+
+                    ViewBag.MusteriAdi = zimmetler != null && zimmetler.Count > 0 ? zimmetler.First().Musteri.MusteriAdi : "";
+
+                    return View(zimmetler);
+                }
+                else
+                {
+                    var zimmetler = db.ZimmetTanims
                     .Include("Musteri")
                     .Where(x => !x.IsDeleted)
                     .OrderBy(x => x.CreatedAt)
                     .ToList();
 
-                return View(zimmetler);
+                    return View(zimmetler);
+                }
+                
             }
         }
 

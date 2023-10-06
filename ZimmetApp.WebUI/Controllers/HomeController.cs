@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ZimmetApp.DataAccess.EntityFramework;
+using ZimmetApp.Entities.Models;
 
 namespace ZimmetApp.WebUI.Controllers
 {
@@ -31,6 +32,29 @@ namespace ZimmetApp.WebUI.Controllers
             #endregion
 
             return View();
+        }
+
+        public ActionResult Arama(FormCollection form)
+        {
+            var aramaDegeri = form["AramaDegeri"].ToString();
+
+            using (var db = new ZimmetDbContext())
+            {
+                var musteriAdi = aramaDegeri.ToUpper();
+
+                var dbMusteri = db.Musteris
+                        .FirstOrDefault(x => !x.IsDeleted && x.MusteriAdi.Contains(musteriAdi));
+
+                if (dbMusteri != null)
+                {
+                    return RedirectToAction("Listele", "Zimmet", new { musteri_id = dbMusteri.Id });
+                }
+                else
+                {
+                    TempData["NO"] = "Müşteri Bilgisi Bulunamadı!";
+                    return RedirectToAction("Index");
+                }
+            }
         }
     }
 }
