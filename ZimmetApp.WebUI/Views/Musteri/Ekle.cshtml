@@ -1,6 +1,18 @@
 ﻿@model ZimmetApp.Entities.Models.Musteri
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var baslik = "Müşteri Ekle";
+    var butonText = "Kaydet";
+    var butonColor = "btn-primary";
+
+    if (Model != null)
+    {
+        baslik = "Müşteri Güncelle";
+        butonText = "Güncelle";
+        butonColor = "btn-success";
+    }
+
 }
 
 
@@ -8,7 +20,7 @@
     <div class="col-lg-6">
         <div class="card mb-4 mt-4">
             <div class="card-header">
-                <i class="fa-solid fa-circle-plus"></i> Müşteri Ekle
+                <i class="fa-solid fa-circle-plus"></i> @baslik
             </div>
             <div class="card-body">
                 <form method="post" action="/Musteri/Ekle">
@@ -29,19 +41,9 @@
                     </div>
 
 
-                    @if (Model != null)
-                    {
-                        <button class="btn btn-success" type="submit">
-                            Güncelle
-                        </button>
-                    }
-                    else
-                    {
-                        <button class="btn btn-primary" type="submit">
-                            Kaydet
-                        </button>
-                    }
-
+                    <button class="btn @butonColor" type="submit">
+                        @butonText
+                    </button>
 
                 </form>
             </div>

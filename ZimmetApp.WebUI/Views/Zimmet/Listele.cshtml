@@ -70,14 +70,12 @@
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            @if (!item.IsDeleted)
-                                            {
-                                                <button type="button"
-                                                        onclick="Sil('@item.Id')"
-                                                        class="btn btn-danger btn-sm">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            }
+
+                                            <button type="button"
+                                                    onclick="Sil('@item.Id')"
+                                                    class="btn btn-danger btn-sm">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
 
 
                                         </div>
@@ -102,7 +100,7 @@
 
 <script>
 
-    function Sil(mutseri_id) {
+    function Sil(zimmet_id) {
 
         Swal.fire({
             title: 'Silmek istediğinize emin misiniz?',
@@ -114,7 +112,7 @@
 
             if (result.isConfirmed) {
 
-                location.href = '/Zimmet/Sil/?id=' + mutseri_id
+                location.href = '/Zimmet/Sil/?id=' + zimmet_id
 
             } else if (result.isDenied) {
                 //Swal.fire('Changes are not saved', '', 'info')

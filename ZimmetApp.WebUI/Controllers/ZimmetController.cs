@@ -8,7 +8,7 @@ using ZimmetApp.Entities.Models;
 
 namespace ZimmetApp.WebUI.Controllers
 {
-    public class ZimmetController : Controller
+    public class ZimmetController : BaseController
     {
         public ActionResult Listele()
         {
@@ -65,9 +65,6 @@ namespace ZimmetApp.WebUI.Controllers
                     dbzimmmetTanim.Irtibat2 = zimmetTanim.Irtibat2;
 
                     dbzimmmetTanim.UpdatedAt = DateTime.Now;
-
-                    
-
 
                     db.SaveChanges();
 
