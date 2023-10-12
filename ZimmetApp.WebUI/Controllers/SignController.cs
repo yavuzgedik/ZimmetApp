@@ -42,7 +42,8 @@ namespace ZimmetApp.WebUI.Controllers
 
             using (var db = new ZimmetDbContext())
             {
-                var user = db.Users.FirstOrDefault(x => x.UserCode == userCode && x.UserPassword == userPass);
+                var hashPass = PasswordHash.MD5(userPass);
+                var user = db.Users.FirstOrDefault(x => x.UserCode == userCode && x.UserPassword == hashPass);
 
                 if (user != null)
                 {

@@ -1,0 +1,130 @@
+﻿@model List<ZimmetApp.Entities.Models.User>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <a href="/Kullanici/Ekle" class="btn btn-primary btn-sm mt-2">
+            <i class="fa-solid fa-user-plus"></i> &nbsp; Kullanıcı Ekle
+        </a>
+
+        <div class="card mb-4 mt-2">
+            <div class="card-header">
+                <i class="fa-solid fa-users"></i> Kullanıcı Listesi
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="align-middle text-center">Kayıt</th>
+                            <th class="align-middle text-center">Son Güncelleme</th>
+                            <th class="align-middle text-center">Kullanıcı Kodu</th>
+                            <th class="align-middle text-center">Kullanıcı Adı</th>
+                            <th class="align-middle text-center">Email</th>
+                            <th class="align-middle text-center">Yönetici Mi?</th>
+                            <th class="align-middle text-center">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        @item.CreatedAt.ToString("dd.MM.yyyy HH:mm:ss")
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @(item.UpdatedAt != null ? item.UpdatedAt.Value.ToString("dd.MM.yyyy HH:mm:ss") : "")
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @item.UserCode
+                                    </td>
+                                    <td class="align-middle">
+                                        @item.FullName
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @item.Email
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @if (item.IsAdmin)
+                                        {
+                                            <span class="badge bg-primary">Evet</span>
+
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Hayır</span>
+
+                                        }
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group btn-group-sm"
+                                             role="group" aria-label="İşlemler">
+
+                                            @*<a target="_blank" href="/Zimmet/Listele/?musteri_id=@item.Id"
+                                                   class="btn btn-dark btn-sm">
+                                                    <i class="fa-solid fa-list"></i>
+                                                </a>*@
+
+                                            <a href="/Kullanici/Ekle/?userId=@item.Id"
+                                               class="btn btn-success btn-sm">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+
+                                            <button type="button"
+                                                    onclick="Sil('@item.Id')"
+                                                    class="btn btn-danger btn-sm">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center">Kayıt Bulunamadı!.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function Sil(userId) {
+
+        Swal.fire({
+            title: 'Silmek istediğinize emin misiniz?',
+            showDenyButton: true,
+            //showCancelButton: false,
+            confirmButtonText: 'Evet',
+            denyButtonText: 'Hayır',
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                location.href = '/Kullanici/Sil/?id=' + userId
+
+            } else if (result.isDenied) {
+                //Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+</script>
+
+

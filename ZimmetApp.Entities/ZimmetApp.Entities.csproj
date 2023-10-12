@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Enums\LogTip.cs" />
     <Compile Include="Helper\LogDetay.cs" />
+    <Compile Include="Helper\PasswordHash.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Musteri.cs" />
     <Compile Include="Models\ZimmetLog.cs" />

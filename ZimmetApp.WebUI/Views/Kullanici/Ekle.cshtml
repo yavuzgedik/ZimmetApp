@@ -1,0 +1,95 @@
+﻿@model ZimmetApp.Entities.Models.User
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var baslik = "Kullanici Ekle";
+    var butonText = "Kaydet";
+    var butonColor = "btn-primary";
+
+    if (Model != null)
+    {
+        baslik = "Kullanıcı Güncelle";
+        butonText = "Güncelle";
+        butonColor = "btn-success";
+    }
+
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card mb-4 mt-4">
+            <div class="card-header">
+                <i class="fa-solid fa-user-plus"></i> @baslik
+            </div>
+            <div class="card-body">
+                <form method="post" action="/Kullanici/Ekle">
+
+                    @if (Model != null)
+                    {
+                        <input type="hidden" class="form-control" name="Id" value="@Model.Id">
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label">Kullanici Kod</label>
+                        <input type="text" 
+                               class="form-control form-control-sm" 
+                               name="UserCode" maxlength="10" @(Model != null ? "disabled" : "") 
+                               value="@(Model != null ? Model.UserCode : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Kullanıcı Adı</label>
+                        <input type="text" class="form-control form-control-sm" name="FirstName" value="@(Model != null ? Model.FirstName : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Kullanıcı Soyadı</label>
+                        <input type="text" class="form-control form-control-sm" name="LastName" value="@(Model != null ? Model.LastName : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control form-control-sm" name="Email" value="@(Model != null ? Model.Email : "")">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Şifre</label>
+                        <input type="text" class="form-control form-control-sm" id="UserInputId" name="UserPassword">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Yönetici Mi?</label>
+                        <select class="form-control selectpicker" name="IsAdmin"
+                                data-title="Yönetici Seçiniz"
+                                data-live-search="true">
+                            <option @(Model != null && Model.IsAdmin ? "selected" : "") value="True">Evet</option>
+                            <option @(Model != null && !Model.IsAdmin ? "selected" : "") value="False">Hayır</option>
+                        </select>
+                    </div>
+
+                    <button class="btn @butonColor" type="submit">
+                        @butonText
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            //document.getElementById("UserInputId").value = "1";
+        });
+    </script>
+}
+
+
+
