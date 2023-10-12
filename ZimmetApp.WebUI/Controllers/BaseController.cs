@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ZimmetApp.DataAccess.EntityFramework;
 
 namespace ZimmetApp.WebUI.Controllers
 {
@@ -25,6 +26,37 @@ namespace ZimmetApp.WebUI.Controllers
                 //Response.Redirect("/Sign/In");
                 filterContext.Result = new RedirectResult(Url.Action("In", "Sign"));
             }
+
+
+            #region CookieControl
+
+            //if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+            //{
+            //    if (Session["User"] == null)
+            //    {
+            //        using (var db = new ZimmetDbContext())
+            //        {
+            //            var userCode = filterContext.HttpContext.User.Identity.Name;
+
+            //            var user = db.Users.FirstOrDefault(x => x.UserCode == userCode && !x.IsDeleted);
+
+            //            if (user != null)
+            //            {
+            //                Session["User"] = user;
+            //            }
+            //            else
+            //            {
+            //                filterContext.Result = new RedirectResult(Url.Action("In", "Sign"));
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    filterContext.Result = new RedirectResult(Url.Action("In", "Sign"));
+            //}
+
+            #endregion
         }
     }
 }

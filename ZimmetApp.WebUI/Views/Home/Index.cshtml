@@ -1,42 +1,119 @@
-﻿
+﻿@model ZimmetApp.WebUI.Models.ViewModels.ZimmetAppInfoVM
+
 @{
 }
 
+<style>
 
-<div class="row mt-4">
+    .bg-primary {
+        background-color: #1348A6 !important;
+        border-color: #1348A6 !important;
+    }
 
-    <div class="col-xl-3 col-md-6">
+    .bg-warning {
+        background-color: #DE693B !important;
+        border-color: #DE693B !important;
+    }
+
+
+    .bg-success {
+        background-color: #026673 !important;
+        border-color: #026673 !important;
+    }
+
+    .bg-danger {
+        background-color: #A62713 !important;
+        border-color: #A62713 !important;
+    }
+
+</style>
+
+
+<div class="row mt-4 justify-content-center">
+
+    <p class="text-center">Son Güncellenme Tarihi : @Model.SonGuncelleme.ToString("dd.MM.yyyy HH:mm:ss")</p>
+
+    <div class="col-xl-2 col-md-3">
         <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Primary Card</div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-6">
+                        <i class="fa-solid fa-users fa-2x"></i>
+                    </div>
+                    <div class="col-6 text-end">
+                        <span style="font-size: 1.5rem !important;">@Model.KullaniciSayisi</span>
+                        <br />
+                        <span>Kullanıcı</span>
+                    </div>
+                </div>
+
+            </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
+                <a class="small text-white stretched-link text-decoration-none" href="/Kullanici/Listele">Kullanıcı Listesi</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
+
+    <div class="col-xl-2 col-md-3">
         <div class="card bg-warning text-white mb-4">
-            <div class="card-body">Warning Card</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <i class="fa-solid fa-address-book fa-2x"></i>
+                    </div>
+                    <div class="col-6 text-end">
+                        <span style="font-size: 1.5rem !important;">@Model.MusteriSayisi</span>
+                        <br />
+                        <span>Müşteri</span>
+                    </div>
+                </div>
+            </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
+                <a class="small text-white stretched-link text-decoration-none" href="/Musteri/Listele">Müşteri Listesi</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
+
+    <div class="col-xl-2 col-md-3">
         <div class="card bg-success text-white mb-4">
-            <div class="card-body">Success Card</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <i class="fa-solid fa-boxes fa-2x"></i>
+                    </div>
+                    <div class="col-6 text-end">
+                        <span style="font-size: 1.5rem !important;">@Model.ZimmetSayisi</span>
+                        <br />
+                        <span>Zimmet</span>
+                    </div>
+                </div>
+            </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
+                <a class="small text-white stretched-link text-decoration-none" href="/Zimmet/Listele">Zimmet Listesi</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
+
+    <div class="col-xl-2 col-md-3">
         <div class="card bg-danger text-white mb-4">
-            <div class="card-body">Danger Card</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <i class="fas fa-clipboard-list fa-2x"></i>
+                    </div>
+                    <div class="col-6 text-end">
+                        <span style="font-size: 1.5rem !important;">@Model.LogSayisi</span>
+                        <br />
+                        <span>Log</span>
+                    </div>
+                </div>
+            </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
+                <a class="small text-white stretched-link text-decoration-none" href="#">Loglar</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>

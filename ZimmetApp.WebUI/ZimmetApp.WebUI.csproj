@@ -116,6 +116,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\MusteriVM.cs" />
+    <Compile Include="Models\ViewModels\ZimmetAppInfoVM.cs" />
     <Compile Include="Operations\LogOP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

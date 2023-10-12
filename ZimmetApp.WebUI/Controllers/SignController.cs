@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ZimmetApp.DataAccess.EntityFramework;
 using ZimmetApp.Entities.Helper;
 using ZimmetApp.Entities.Models;
@@ -43,11 +44,25 @@ namespace ZimmetApp.WebUI.Controllers
             using (var db = new ZimmetDbContext())
             {
                 var hashPass = PasswordHash.MD5(userPass);
-                var user = db.Users.FirstOrDefault(x => x.UserCode == userCode && x.UserPassword == hashPass);
+                var user = db.Users.FirstOrDefault(x => x.UserCode == userCode && x.UserPassword == hashPass && !x.IsDeleted);
 
                 if (user != null)
                 {
                     LogOP.LogOlusturma(user, LogDetay.SignIn, Entities.Enums.LogTip.SignIn);
+
+                    #region Cookie
+
+                    //HttpCookie ck;
+                    //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.UserCode, DateTime.Now, DateTime.Now.AddDays(1), true, user.UserCode);
+
+                    //string encTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //ck = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                    //ck.Expires = DateTime.Now.AddDays(1);
+                    //ck.Path = FormsAuthentication.FormsCookiePath;
+                    //Response.Cookies.Add(ck);
+
+                    #endregion
 
                     Session["User"] = user;
                     return RedirectToAction("Index", "Home");
