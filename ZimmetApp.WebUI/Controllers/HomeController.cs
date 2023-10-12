@@ -32,7 +32,7 @@ namespace ZimmetApp.WebUI.Controllers
 
         private void CacheData(ZimmetAppInfoVM zimmetAppInfoVM)
         {
-            HttpContext.Cache.Insert("ZimmetInfo", zimmetAppInfoVM, null, DateTime.Now.AddMinutes(1), Cache.NoSlidingExpiration);
+            HttpContext.Cache.Insert("ZimmetInfo", zimmetAppInfoVM, null, DateTime.Now.AddSeconds(15), Cache.NoSlidingExpiration);
         }
 
         public ActionResult Index()
