@@ -6,12 +6,33 @@ using System.Web.Mvc;
 using ZimmetApp.DataAccess.EntityFramework;
 using ZimmetApp.Entities.Helper;
 using ZimmetApp.Entities.Models;
+using ZimmetApp.WebUI.Filters;
 using ZimmetApp.WebUI.Models.ViewModels;
 
 namespace ZimmetApp.WebUI.Controllers
 {
+    [AuthAdmin]
     public class KullaniciController : BaseController
     {
+        #region Admin-Kontrolu
+        //protected override void OnAuthorization(AuthorizationContext filterContext)
+        //{
+        //    if (Session["User"] != null)
+        //    {
+        //        var kullanici = Session["User"] as User;
+
+        //        if (!kullanici.IsAdmin)
+        //        {
+        //            filterContext.Result = new RedirectResult(Url.Action("Index", "Home"));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        filterContext.Result = new RedirectResult(Url.Action("In", "Sign"));
+        //    }
+        //}
+        #endregion
+
         public ActionResult Listele()
         {
             using (var db = new ZimmetDbContext())
@@ -110,7 +131,6 @@ namespace ZimmetApp.WebUI.Controllers
                 }
             }
         }
-
 
         public ActionResult Sil(Guid id)
         {

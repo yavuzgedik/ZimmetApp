@@ -111,6 +111,7 @@
     <Compile Include="Controllers\MusteriController.cs" />
     <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Controllers\ZimmetController.cs" />
+    <Compile Include="Filters\Auth.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

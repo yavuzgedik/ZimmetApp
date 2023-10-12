@@ -82,10 +82,16 @@
                                 <a class="nav-link" href="/Zimmet/Ekle">Zimmet Ekle</a>
                             </nav>
                         </div>
-                        <a class="nav-link" href="/Kullanici/Listele">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Kullanıcılar
-                        </a>
+
+                        @if (user.IsAdmin)
+                        {
+                            <a class="nav-link" href="/Kullanici/Listele">
+                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                Kullanıcılar
+                            </a>
+                        }
+
+
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
