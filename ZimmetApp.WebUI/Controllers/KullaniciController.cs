@@ -118,10 +118,10 @@ namespace ZimmetApp.WebUI.Controllers
             {
                 var kullanici = db.Users.FirstOrDefault(x => x.Id == id);
 
-                //kullanici.UpdatedAt = DateTime.Now;
-                //kullanici.IsDeleted = true;
+                kullanici.UpdatedAt = DateTime.Now;
+                kullanici.IsDeleted = true;
 
-                db.Users.Remove(kullanici);
+                //db.Users.Remove(kullanici);
 
                 db.SaveChanges();
 
