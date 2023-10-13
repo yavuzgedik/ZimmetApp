@@ -27,6 +27,7 @@
                             <th class="align-middle text-center">Kullanıcı Adı</th>
                             <th class="align-middle text-center">Email</th>
                             <th class="align-middle text-center">Yönetici Mi?</th>
+                            <th class="align-middle text-center">Şube/Depratman</th>
                             <th class="align-middle text-center">İşlemler</th>
                         </tr>
                     </thead>
@@ -63,6 +64,11 @@
 
                                         }
                                     </td>
+
+                                    <td class="align-middle text-start">
+                                        @(item.Sube != null ? item.Sube.SubeAdi : "") / @(item.Departman != null ? item.Departman.DepartmanAdi : "")
+                                    </td>
+
                                     <td class="align-middle text-center">
                                         <div class="btn-group btn-group-sm"
                                              role="group" aria-label="İşlemler">

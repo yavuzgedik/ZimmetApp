@@ -38,6 +38,8 @@ namespace ZimmetApp.WebUI.Controllers
             using (var db = new ZimmetDbContext())
             {
                 var kullanicilar = db.Users
+                    .Include("Sube")
+                    .Include("Departman")
                     .Where(x => !x.IsDeleted)
                     .ToList();
 
@@ -60,15 +62,42 @@ namespace ZimmetApp.WebUI.Controllers
 
         public ActionResult Ekle(Guid? userId)
         {
-            if (userId == null)
+            #region EskiKod
+
+            //if (userId == null)
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+            //    using (var db = new ZimmetDbContext())
+            //    {
+            //        var kullanici = db.Users.FirstOrDefault(x => x.Id == userId);
+            //        return View(kullanici);
+            //    }
+            //}
+
+            #endregion
+
+            using (var db = new ZimmetDbContext())
             {
-                return View();
-            }
-            else
-            {
-                using (var db = new ZimmetDbContext())
+                ViewBag.Subeler = db.Subes.ToList();
+
+                if (userId == null)
                 {
-                    var kullanici = db.Users.FirstOrDefault(x => x.Id == userId);
+                    return View();
+                }
+                else
+                {
+                    var kullanici = db.Users
+                        .Include("Sube")
+                        .FirstOrDefault(x => x.Id == userId);
+
+                    if (kullanici.Sube != null)
+                    {
+                        ViewBag.Departmanlar = db.Departmans.Where(x => x.SubeId == kullanici.SubeId).ToList();
+                    }
+
                     return View(kullanici);
                 }
             }
@@ -115,6 +144,8 @@ namespace ZimmetApp.WebUI.Controllers
                     dbUser.LastName = kullanici.LastName;
                     dbUser.Email = kullanici.Email;
                     dbUser.IsAdmin = kullanici.IsAdmin;
+                    dbUser.SubeId = kullanici.SubeId;
+                    dbUser.DepartmanId = kullanici.DepartmanId;
 
                     var pw = kullanici.UserPassword != null ? kullanici.UserPassword.Trim() : null;
                     if (pw != null && pw != "")

@@ -13,6 +13,14 @@
         butonColor = "btn-success";
     }
 
+    var subeler = ViewBag.Subeler as List<ZimmetApp.Entities.Models.Sube>;
+
+    var departmanlar = new List<ZimmetApp.Entities.Models.Departman>();
+    if (ViewBag.Departmanlar != null)
+    {
+        departmanlar = ViewBag.Departmanlar as List<ZimmetApp.Entities.Models.Departman>;
+    }
+
 }
 
 
@@ -32,9 +40,9 @@
 
                     <div class="mb-3">
                         <label class="form-label">Kullanici Kod</label>
-                        <input type="text" 
-                               class="form-control form-control-sm" 
-                               name="UserCode" maxlength="10" @(Model != null ? "disabled" : "") 
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               name="UserCode" maxlength="10" @(Model != null ? "disabled" : "")
                                value="@(Model != null ? Model.UserCode : "")">
                     </div>
 
@@ -68,6 +76,40 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Şube</label>
+                        <select class="form-control selectpicker" name="SubeId"
+                                data-title="Şube Seçiniz" id="selectSubeId"
+                                data-live-search="true" required onchange="DepartmanGetir()">
+
+                            @foreach (var item in subeler)
+                            {
+                                <option @(Model != null && Model.SubeId == item.Id ? "selected" : "")
+                                        value="@item.Id">
+                                    @item.SubeAdi
+                                </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Departman</label>
+                        <select class="form-control selectpicker" name="DepartmanId"
+                                data-title="Departman Seçiniz" id="DepartmanId"
+                                data-live-search="true" required>
+
+                            @foreach (var item in departmanlar)
+                            {
+                                <option @(Model != null && Model.DepartmanId == item.Id ? "selected" : "")
+                                        value="@item.Id">
+                                    @item.DepartmanAdi
+                                </option>
+                            }
+
+                        </select>
+                    </div>
+
                     <button class="btn @butonColor" type="submit">
                         @butonText
                     </button>
@@ -78,16 +120,41 @@
     </div>
 </div>
 
-
-
-
-
 @section Scripts
 {
     <script>
         $(document).ready(function () {
             //document.getElementById("UserInputId").value = "1";
         });
+
+        function DepartmanGetir() {
+
+            var subeId = document.getElementById("selectSubeId").value;
+
+            $("#DepartmanId").html("");
+
+            $.ajax({
+                type: "POST",
+                url: "/Sube/DepartmanListesi/?subeId=" + subeId,
+                success: function (result) {
+                    if (result.success == true) {
+
+                        for (var i = 0; i < result.value.length; i++) {
+                            $('#DepartmanId').append("<option value='" + result.value[i].DepartmanId + "'>" + result.value[i].DepartmanAdi + "</option>");
+                        }
+
+                        $('#DepartmanId').selectpicker('refresh');
+
+                    } else {
+                        //alert("veri gelmedi");
+                    }
+                },
+                error: function () {
+                    //alert("bir hata oluştu");
+                }
+            });
+
+        }
     </script>
 }
 

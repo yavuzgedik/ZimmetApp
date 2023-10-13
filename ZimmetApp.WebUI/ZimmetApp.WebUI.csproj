@@ -110,11 +110,13 @@
     <Compile Include="Controllers\KullaniciController.cs" />
     <Compile Include="Controllers\MusteriController.cs" />
     <Compile Include="Controllers\SignController.cs" />
+    <Compile Include="Controllers\SubeController.cs" />
     <Compile Include="Controllers\ZimmetController.cs" />
     <Compile Include="Filters\Auth.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\DepartmanVM.cs" />
     <Compile Include="Models\ViewModels\MusteriVM.cs" />
     <Compile Include="Models\ViewModels\ZimmetAppInfoVM.cs" />
     <Compile Include="Operations\LogOP.cs" />
@@ -143,6 +145,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Sube\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZimmetApp.DataAccess\ZimmetApp.DataAccess.csproj">
