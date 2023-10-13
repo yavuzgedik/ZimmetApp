@@ -87,6 +87,26 @@ namespace ZimmetApp.TestConsoleApp
             #endregion
 
 
+            #region VeriGuncelleme
+            //using (var db = new ZimmetDbContext())
+            //{
+            //    var result = db.ZimmetTanims.ToList();
+
+            //    var count = 0;
+            //    foreach (var item in result)
+            //    {
+            //        count++;
+            //        if (count % 10 == 3)
+            //        {
+            //            item.CreatedAt = item.CreatedAt.AddMonths(3);
+            //        }
+            //    }
+
+            //    db.SaveChanges();
+            //}
+
+            #endregion
+
         }
     }
 }

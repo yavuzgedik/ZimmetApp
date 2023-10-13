@@ -2,9 +2,78 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var musteriler = ViewBag.Musteriler as List<ZimmetApp.Entities.Models.Musteri>;
+}
+
+@section Styles
+{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet" />
+    
 }
 
 <div class="row justify-content-center">
+
+    <div class="col-lg-12">
+        <div class="card mb-4 mt-4">
+            <div class="card-header fw-bold">
+                <i class="fa-solid fa-boxes"></i> Zimmet Filtreleme
+            </div>
+            <div class="card-body">
+
+                <form method="post" action="/Zimmet/Listele">
+
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">Başlangıç Tarihi</label>
+                                <input type="date" class="form-control" name="start"
+                                       value="@(TempData["Start"] != null ? Convert.ToDateTime(TempData["Start"]).ToString("yyyy-MM-dd") : DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">Bitiş Tarihi</label>
+                                <input type="date" class="form-control" name="end" 
+                                       value="@(TempData["End"] != null ? Convert.ToDateTime(TempData["End"]).ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">Müşteri</label>
+                                <select class="form-control selectpicker" name="musteri_id"
+                                        data-title="Müşteri Seçiniz"
+                                        data-live-search="true" data-size="3">
+                                    @foreach (var item in musteriler)
+                                    {
+
+                                        <option value="@item.Id"
+                                                @(TempData["MusterId"] != null && Guid.Parse(TempData["MusterId"].ToString()) == item.Id ? "selected" : "") )>
+                                            @item.MusteriAdi
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <button class="btn btn-primary" type="submit">
+                        Sorgula
+                    </button>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 
     <div class="col-lg-12">
 
@@ -15,7 +84,7 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table id="dataTable" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th class="align-middle text-center" width="5%">Tarih</th>
@@ -102,12 +171,6 @@
                                     </tr>
                                 }
                             }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="8" class="text-center">Kayıt Bulunamadı!.</td>
-                                </tr>
-                            }
                         </tbody>
                     </table>
                 </div>
@@ -137,34 +200,69 @@
     </div>
 </div>
 
-<script>
 
-    function Sil(zimmet_id) {
+@section Scripts
+{
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 
-        Swal.fire({
-            title: 'Silmek istediğinize emin misiniz?',
-            showDenyButton: true,
-            //showCancelButton: false,
-            confirmButtonText: 'Evet',
-            denyButtonText: 'Hayır',
-        }).then((result) => {
+    <script>
 
-            if (result.isConfirmed) {
+        function Sil(zimmet_id) {
 
-                location.href = '/Zimmet/Sil/?id=' + zimmet_id
+            Swal.fire({
+                title: 'Silmek istediğinize emin misiniz?',
+                showDenyButton: true,
+                //showCancelButton: false,
+                confirmButtonText: 'Evet',
+                denyButtonText: 'Hayır',
+            }).then((result) => {
 
-            } else if (result.isDenied) {
-                //Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
-    }
+                if (result.isConfirmed) {
 
-    function DetayDoldur(detay) {
+                    location.href = '/Zimmet/Sil/?id=' + zimmet_id
 
-        console.log(detay);
+                } else if (result.isDenied) {
+                    //Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
 
-        document.getElementById("aciklamaDetayId").innerText = detay;
-    }
+        function DetayDoldur(detay) {
 
-</script>
+            console.log(detay);
+
+            document.getElementById("aciklamaDetayId").innerText = detay;
+        }
+
+        /*new DataTable('#dataTable');*/
+
+        $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
+                responsive: true,
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'colvis'],
+                /*"pageLength": 50*/
+                //"language": {
+                //    "url": "https://cdn.datatables.net/plug-ins/1.13.6/sorting/turkish-string.js"
+                //}
+            });
+
+            table.buttons().container()
+                .appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+        });
+
+    </script>
+
+
+}
+
 

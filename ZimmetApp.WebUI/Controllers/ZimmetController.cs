@@ -16,10 +16,33 @@ namespace ZimmetApp.WebUI.Controllers
         {
             using (var db = new ZimmetDbContext())
             {
+                var musteriler = db.Musteris
+                    .Where(x => !x.IsDeleted)
+                    .OrderBy(x => x.MusteriKod)
+                    .ToList();
+
+                ViewBag.Musteriler = musteriler;
+            }
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Listele(DateTime? start, DateTime? end, Guid? musteri_id)
+        {
+            using (var db = new ZimmetDbContext())
+            {
                 var user = Session["User"] as User;
                 LogOP.LogOlusturma(user, LogDetay.ZimmetListeleme, Entities.Enums.LogTip.Read);
 
-                if (musteri_id != null)
+                var musteriler = db.Musteris
+                    .Where(x => !x.IsDeleted)
+                    .OrderBy(x => x.MusteriKod)
+                    .ToList();
+
+                ViewBag.Musteriler = musteriler;
+
+                if (start == null && end == null && musteri_id != null)
                 {
                     var zimmetler = db.ZimmetTanims
                         .Include("Musteri")
@@ -33,15 +56,25 @@ namespace ZimmetApp.WebUI.Controllers
                 }
                 else
                 {
+                    var one = new DateTime(start.Value.Year, start.Value.Month, start.Value.Day, 0, 0, 0);
+                    var two = new DateTime(end.Value.Year, end.Value.Month, end.Value.Day, 23, 59, 59);
+
+                    TempData["Start"] = one;
+                    TempData["End"] = two;
+
+                    TempData["MusterId"] = musteri_id;
+
                     var zimmetler = db.ZimmetTanims
-                    .Include("Musteri")
-                    .Where(x => !x.IsDeleted)
-                    .OrderBy(x => x.CreatedAt)
-                    .ToList();
+                        .Include("Musteri")
+                        .Where(x => !x.IsDeleted
+                        && x.CreatedAt >= one
+                        && x.CreatedAt <= two
+                        && (musteri_id == null || x.MusteriId == musteri_id))
+                        .OrderBy(x => x.CreatedAt)
+                        .ToList();
 
                     return View(zimmetler);
                 }
-                
             }
         }
 
