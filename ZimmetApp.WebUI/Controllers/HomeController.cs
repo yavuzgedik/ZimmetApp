@@ -13,28 +13,6 @@ namespace ZimmetApp.WebUI.Controllers
 {
     public class HomeController : BaseController
     {
-        private ZimmetAppInfoVM LoadData()
-        {
-            // Verileri veritabanından veya başka bir kaynaktan yükle
-            using (var db = new ZimmetDbContext())
-            {
-                var zimmetAppInfoVM = new ZimmetAppInfoVM
-                {
-                    KullaniciSayisi = db.Users.Where(x => !x.IsDeleted).Count(),
-                    MusteriSayisi = db.Musteris.Where(x => !x.IsDeleted).Count(),
-                    ZimmetSayisi = db.ZimmetTanims.Where(x => !x.IsDeleted).Count(),
-                    LogSayisi = db.ZimmetLogs.Where(x => !x.IsDeleted).Count(),
-                    SonGuncelleme = DateTime.Now
-                };
-                return zimmetAppInfoVM;
-            }
-        }
-
-        private void CacheData(ZimmetAppInfoVM zimmetAppInfoVM)
-        {
-            HttpContext.Cache.Insert("ZimmetInfo", zimmetAppInfoVM, null, DateTime.Now.AddSeconds(15), Cache.NoSlidingExpiration);
-        }
-
         public ActionResult Index()
         {
             #region SessionControl
@@ -117,18 +95,22 @@ namespace ZimmetApp.WebUI.Controllers
             //return View(zimmetAppInfoVM);
             #endregion
 
+            #region Cache
+
             ZimmetAppInfoVM zimmetAppInfoVM;
 
-            // Önbellekten verileri alma
-            if (HttpContext.Cache["ZimmetInfo"] != null)
+            if (HttpContext.Cache["ZimmetInfo"] != null) // Önbellekten verileri alma
             {
                 zimmetAppInfoVM = HttpContext.Cache["ZimmetInfo"] as ZimmetAppInfoVM;
             }
             else
             {
-                zimmetAppInfoVM = LoadData();
-                CacheData(zimmetAppInfoVM);
+                zimmetAppInfoVM = LoadData(); // Veriyi DB'den Getir
+                CacheData(zimmetAppInfoVM); // Veriyi Cache' Ekle
             }
+
+            #endregion
+
 
             return View(zimmetAppInfoVM);
 
@@ -155,6 +137,28 @@ namespace ZimmetApp.WebUI.Controllers
                     return RedirectToAction("Index");
                 }
             }
+        }
+
+        private ZimmetAppInfoVM LoadData()
+        {
+            using (var db = new ZimmetDbContext())
+            {
+                var zimmetAppInfoVM = new ZimmetAppInfoVM
+                {
+                    KullaniciSayisi = db.Users.Where(x => !x.IsDeleted).Count(),
+                    MusteriSayisi = db.Musteris.Where(x => !x.IsDeleted).Count(),
+                    ZimmetSayisi = db.ZimmetTanims.Where(x => !x.IsDeleted).Count(),
+                    LogSayisi = db.ZimmetLogs.Where(x => !x.IsDeleted).Count(),
+                    SonGuncelleme = DateTime.Now
+                };
+
+                return zimmetAppInfoVM;
+            }
+        }
+
+        private void CacheData(ZimmetAppInfoVM zimmetAppInfoVM)
+        {
+            HttpContext.Cache.Insert("ZimmetInfo", zimmetAppInfoVM, null, DateTime.Now.AddSeconds(15), Cache.NoSlidingExpiration);
         }
     }
 }
