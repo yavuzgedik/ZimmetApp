@@ -13,20 +13,24 @@ namespace ZimmetApp.TestConsoleApp
     {
         static void Main(string[] args)
         {
+            #region Liste
             //var sehiler = new List<string>();
 
             //sehiler.Add("Bursa");
             //sehiler.Add("Yalova");
             //sehiler.Add("İzmir");
             //sehiler.Add("Manisa");
+            #endregion
 
-            var OneDate = new DateTime(2023, 10, 1);
-            var TwoDate = DateTime.Now;
+            #region TarihKontrol
+            //var OneDate = new DateTime(2023, 10, 1);
+            //var TwoDate = DateTime.Now;
 
-            var fark = TwoDate - OneDate;
-            var ticks = fark.Ticks;
+            //var fark = TwoDate - OneDate;
+            //var ticks = fark.Ticks;
+            #endregion
 
-
+            #region RandomZimmetOluşturma
             //using (var db = new ZimmetDbContext())
             //{
             //    var musteriler = db.Musteris.Where(x=> !x.IsDeleted).ToList();
@@ -55,7 +59,32 @@ namespace ZimmetApp.TestConsoleApp
             //    db.ZimmetTanims.AddRange(eklenecekZimmetList);
             //    db.SaveChanges();
             //}
+            #endregion
 
+            #region SubeVeDepartmanOlusturma
+
+            //using (var db = new ZimmetDbContext())
+            //{
+            //    db.Subes.Add(new Sube()
+            //    {
+            //        SubeAdi = "Bursa",
+            //        Departmens = new List<Departman>()
+            //        {
+            //            new Departman()
+            //            {
+            //                DepartmanAdi = "Bursa IT",
+            //            },
+            //            new Departman()
+            //            {
+            //                DepartmanAdi = "Bursa Finans",
+            //            }
+            //        },
+            //    });
+
+            //    db.SaveChanges();
+            //}
+
+            #endregion
 
 
         }

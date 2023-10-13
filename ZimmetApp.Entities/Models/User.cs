@@ -19,6 +19,13 @@ namespace ZimmetApp.Entities.Models
 
         public bool IsAdmin { get; set; }
 
+        public Guid? SubeId { get; set; }
+        public Guid? DepartmanId { get; set; }
+
+        public virtual Sube Sube { get; set; }
+        public virtual Departman Departman { get; set; }
+
+
         public virtual List<ZimmetLog> ZimmetLogs { get; set; }
 
         [NotMapped]

@@ -18,6 +18,10 @@ namespace ZimmetApp.DataAccess.EntityFramework
         public virtual DbSet<Musteri> Musteris { get; set; }
         public virtual DbSet<ZimmetTanim> ZimmetTanims { get; set; }
         public virtual DbSet<ZimmetLog> ZimmetLogs { get; set; }
+
+        public virtual DbSet<Sube> Subes { get; set; }
+        public virtual DbSet<Departman> Departmans { get; set; }
+        
     }
 
     public class ZimmetInitializer : CreateDatabaseIfNotExists<ZimmetDbContext>
@@ -30,11 +34,8 @@ namespace ZimmetApp.DataAccess.EntityFramework
                 LastName = "Gedik",
                 IsAdmin = true,
                 UserCode = "001",
-                UserPassword = "100",
+                UserPassword = PasswordHash.MD5("100"),
             });
-
-
-            //User _user = new User();
 
             db.SaveChanges();
         }
